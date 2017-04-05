@@ -1,4 +1,32 @@
 #!/bin/bash
 echo Running $BASH_SOURCE
 set | egrep GIT
-echo PWD is $PWD
+
+BRANCH=$(git rev-parse --abbrev-ref HEAD)
+MESSAGE=''
+
+# if branch is master
+if [[ "$BRANCH" == "master" ]]; then
+  echo "updating CHANGELOG for release"
+
+  PACKAGE_VERSION=$(cat package.json \
+    | grep version \
+    | head -1 \
+    | awk -F: '{ print $2 }' \
+    | sed 's/[",]//g' \
+    | tr -d '[[:space:]]')
+  DATE=$(date '+%d %b %Y')
+  MESSAGE="\n## $PACKAGE_VERSION - $DATE\n\n"
+fi
+
+if [[ "$BRANCH" == "develop" ]]; then
+  echo "updating CHANGELOG"
+
+  MESSAGE="- $(cat .git/COMMIT_EDITMSG) ($GIT_AUTHOR_NAME)\n"
+fi
+
+echo $MESSAGE
+awk -v MESSAGE="$MESSAGE" 'NR==2{printf("%s", MESSAGE)}7' CHANGELOG.md > CHANGELOG.md.tmp 
+mv CHANGELOG.md.tmp CHANGELOG.md
+
+exit 0

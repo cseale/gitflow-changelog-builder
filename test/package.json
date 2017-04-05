@@ -1,0 +1,19 @@
+{
+  "name": "gitflow-changelog-builder",
+  "version": "1.0.0",
+  "description": "Build a changlog based on gitflow branches and commit messaging using git post-commit hooks",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cseale/gitflow-changelog-builder.git"
+  },
+  "author": "Colm Seale",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cseale/gitflow-changelog-builder/issues"
+  },
+  "homepage": "https://github.com/cseale/gitflow-changelog-builder#readme"
+}
